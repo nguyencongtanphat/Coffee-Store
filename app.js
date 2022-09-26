@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const cors = require('cors')
+require("dotenv").config();
 const database = require('./src/utils/databaseConn/connection')
 
 // CONFIG LIBRARY
@@ -17,7 +18,11 @@ database.isConnected()
 const userRoute = require('./src/routes/user')
 
 //ROUTES DEFINE
-app.use('user', userRoute)
+app.use('/user', userRoute)
+app.use("/",(req, res)=>{
+    res.send('Welcome to world!');
+})
 
-
-app.listen(3000)
+app.listen(process.env.PORT , () => {
+  console.log(`listening on http://localhost:${process.env.PORT}`);
+});

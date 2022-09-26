@@ -1,12 +1,18 @@
 const {Sequelize} = require('sequelize')
+require("dotenv").config();
 
 //CONNECT LOCALHOST
-const sequelize = new Sequelize('coffee', 'root', null, {
-    host: 'localhost',
-    dialect: 'mysql',
+const sequelize = new Sequelize(
+  process.env.DATABASENAME,
+  process.env.USERNAME,
+  process.env.DATABASEPASS,
+  {
+    host: process.env.DATABASEHOST,
+    dialect: "mysql",
     define: {
-        freezeTableName: true
-    }
-})
+      freezeTableName: true,
+    },
+  }
+);
 
 module.exports = sequelize
