@@ -1,6 +1,10 @@
 const sequelize = require('./sequelize')
 const userModel = require('../../models/user')
 const addressModel = require('../../models/address')
+const itemTypeModel = require('../../models/itemType')
+const itemModel = require('../../models/item')
+const receiptModel = require('../../models/receipt')
+const detailReceipt = require('../../models/detailReceipt')
 
 const database = {
         isConnected: async () => {

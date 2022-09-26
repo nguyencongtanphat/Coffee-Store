@@ -1,7 +1,7 @@
 const {Sequelize} = require('sequelize')
 require("dotenv").config();
 
-//CONNECT LOCALHOST
+//CONNECT
 const sequelize = new Sequelize(
   process.env.DATABASENAME,
   process.env.USERNAME,
