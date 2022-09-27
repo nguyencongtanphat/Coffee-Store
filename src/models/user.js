@@ -16,6 +16,6 @@ User.init({
         type: DataTypes.TEXT,
         require: true
     }
-}, {sequelize, modelName:'user'})
+}, {sequelize, modelName:'User'})
 
 module.exports = User

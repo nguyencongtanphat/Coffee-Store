@@ -14,12 +14,12 @@ Receipt.init({
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-            model: 'user',
+            model: 'User',
             key: 'id'
         },
         onDelete: 'CASCADE'
     },
     TotalAmount: DataTypes.INTEGER
-}, {sequelize, modelName:'receipt'})
+}, {sequelize, modelName:'Receipt'})
 
 module.exports = Receipt

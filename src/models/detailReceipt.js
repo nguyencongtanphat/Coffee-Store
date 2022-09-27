@@ -9,7 +9,7 @@ DetailReceipt.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'receipt',
+            model: 'Receipt',
             key: 'id'
         },
         onDelete: 'CASCADE'
@@ -18,12 +18,12 @@ DetailReceipt.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'item',
+            model: 'Item',
             key: 'id'
         },
         onDelete: 'CASCADE'
     },
     quantity: DataTypes.INTEGER
-}, {sequelize, modelName:'detailreceipt'})
+}, {sequelize, modelName:'DetailReceipt'})
 
 module.exports = DetailReceipt

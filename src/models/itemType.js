@@ -5,6 +5,6 @@ class ItemType extends Model {}
 
 ItemType.init({
     Name: DataTypes.STRING
-}, {sequelize, modelName:'itemtype'})
+}, {sequelize, modelName:'ItemType'})
 
 module.exports = ItemType

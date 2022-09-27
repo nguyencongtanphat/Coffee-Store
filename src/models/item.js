@@ -14,11 +14,11 @@ Item.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references:{
-            model: 'itemtype',
+            model: 'ItemType',
             key: 'id'
         },
         onDelete: 'CASCADE'
     }
-}, {sequelize, modelName:'item'})
+}, {sequelize, modelName:'Item'})
 
 module.exports = Item
