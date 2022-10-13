@@ -10,5 +10,6 @@ route.get('/',async (req, res) => {
 });
 
 route.post("/signup", userController.userSignupController);
+route.get("/login", userController.userLoginController);
 
 module.exports = route
