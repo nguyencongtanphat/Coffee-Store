@@ -9,4 +9,6 @@ route.get('/',async (req, res) => {
     res.send(`get all user here,${users}`);
 });
 
+route.post("/signup", userController.userSignupController);
+
 module.exports = route
