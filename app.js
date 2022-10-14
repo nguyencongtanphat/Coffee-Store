@@ -1,4 +1,5 @@
 const express = require('express')
+const authen = require("./src/utils/middleware/authen");
 const bodyParser = require('body-parser')
 const app = express()
 const cors = require('cors')
@@ -19,7 +20,7 @@ const userRoute = require('./src/routes/user')
 
 //ROUTES DEFINE
 app.use('/user', userRoute)
-app.use("/",(req, res)=>{
+app.use("/", authen, (req, res)=>{
     res.send('Welcome to world!');
 })
 
