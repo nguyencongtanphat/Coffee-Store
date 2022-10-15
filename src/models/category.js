@@ -1,10 +1,10 @@
 const { Sequelize, Model, DataTypes } = require('sequelize')
 const sequelize = require('../utils/databaseConn/sequelize')
 
-class ItemType extends Model {}
+class Category extends Model {}
 
-ItemType.init({
+Category.init({
     Name: DataTypes.STRING
-}, {sequelize, modelName:'ItemType'})
+}, {sequelize, modelName:'Category'})
 
-module.exports = ItemType
+module.exports = Category

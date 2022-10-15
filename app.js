@@ -17,9 +17,11 @@ database.isConnected()
 
 //REQUIRE ROUTES
 const userRoute = require('./src/routes/user')
+const menuRoute = require('./src/routes/menu')
 
 //ROUTES DEFINE
 app.use('/user', userRoute)
+app.use('/menu', menuRoute)
 app.use("/", authen, (req, res)=>{
     res.send('Welcome to world!');
 })

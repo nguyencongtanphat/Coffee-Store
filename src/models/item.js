@@ -9,16 +9,7 @@ Item.init({
         type: DataTypes.ENUM,
         values: ['Small', 'Medium', 'Large']
     },
-    Price: DataTypes.INTEGER,
-    Type: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references:{
-            model: 'ItemType',
-            key: 'id'
-        },
-        onDelete: 'CASCADE'
-    }
+    Price: DataTypes.INTEGER
 }, {sequelize, modelName:'Item'})
 
 module.exports = Item

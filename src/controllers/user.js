@@ -37,7 +37,8 @@ const userController = {
         
       }
     } catch (e) {
-      res.send("error", e);
+      res.status(404).json(e)
+      //res.send("error", e);
     }
   },
   userLoginController: async (req, res) => {

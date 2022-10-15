@@ -15,18 +15,26 @@ require("dotenv").config();
 //   }
 // );
 
-const sequelize = new Sequelize(
-  process.env.DBNAME,
-  process.env.DBUSERNAME,
-  process.env.DBPASSWORD,
-  {
-    host: process.env.DBHOST,
-    port: process.env.DBPORT,
-    dialect: "mysql",
-    define: {
-      freezeTableName: true,
-    },
-  }
-);
+const sequelize = new Sequelize('coffee', 'root', null , {
+    host: 'localhost',
+    dialect: 'mysql',
+    define:{
+      freezeTableName: true
+    }
+});
+
+// const sequelize = new Sequelize(
+//   process.env.DBNAME,
+//   process.env.DBUSERNAME,
+//   process.env.DBPASSWORD,
+//   {
+//     host: process.env.DBHOST,
+//     port: process.env.DBPORT,
+//     dialect: "mysql",
+//     define: {
+//       freezeTableName: true,
+//     },
+//   }
+// );
 
 module.exports = sequelize
