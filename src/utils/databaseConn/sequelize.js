@@ -15,12 +15,21 @@ require("dotenv").config();
 //   }
 // );
 
-const sequelize = new Sequelize('coffee', 'root', null , {
-    host: 'localhost',
-    dialect: 'mysql',
-    define:{
-      freezeTableName: true
-    }
+// const sequelize = new Sequelize('coffee', 'root', null , {
+//     host: 'localhost',
+//     dialect: 'mysql',
+//     define:{
+//       freezeTableName: true
+//     }
+// });
+
+const sequelize = new Sequelize('coffee-store', 'admin_db', 'dbpassword@1', {
+  host: 'core-banking-db.mysql.database.azure.com',
+  dialect: 'mysql',
+  define:{
+    freezeTableName: true
+  },
+  ssl: 'ca:fs.readFileSync("{ca-cert filename}")'
 });
 
 // const sequelize = new Sequelize(
