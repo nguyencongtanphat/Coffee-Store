@@ -86,4 +86,5 @@ const menuController = {
     });
   },
 };
+
 module.exports = menuController;
