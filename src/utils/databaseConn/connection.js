@@ -12,7 +12,7 @@ const database = {
         isConnected: async () => {
             await sequelize.authenticate()
             .then(async () => {
-                const isForce = false
+                const isForce = false;
                 associate()
                 await sequelize.sync({force: isForce})
                 
