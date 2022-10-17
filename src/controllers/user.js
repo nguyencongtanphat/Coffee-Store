@@ -14,35 +14,28 @@ const userController = {
         res.json("your username is used, please enter another name");
       } else {
         //hash password
-        bcrypt.hash(req.body.Password, saltRounds,  async (err, hash)=> {
-          // Store hash in your password DB.
-          if(err){
-            throw Error(err.message);
-          }else{
-            //create new user and write to database
-            const newUser = User.build({
-              Username: req.body.Username,
-              Password: hash,
-              PhoneNumber: req.body.PhoneNumber,
-            });
-            const response = await newUser.save();
-            res.json({
-              success: true,
-              message: "you have successfully create account",
-              data: response,
-            });
-          }
-        });
+        const hash = await bcrypt.hash(req.body.Password, saltRounds);
 
-        
+        //create new user and write to database
+        const newUser = User.build({
+          Username: req.body.Username,
+          Password: hash,
+          PhoneNumber: req.body.PhoneNumber,
+        });
+        const response = await newUser.save();
+        res.json({
+          success: true,
+          message: "you have successfully create account",
+          data: response,
+        });
       }
     } catch (e) {
-      res.status(404).json(e)
+      res.status(404).json(e);
       //res.send("error", e);
     }
   },
   userLoginController: async (req, res) => {
-    try{
+    try {
       const loginUser = req.body;
       //check is username existing
       const user = await User.findOne({
@@ -51,39 +44,35 @@ const userController = {
 
       if (user) {
         //check password
-        bcrypt.compare(loginUser.Password, user.Password, function (err, result) {
-          console.log("result", result);
-          if(result){
-            //password is correct
-            const token = jwt.sign({ id: user._id }, process.env.PRIVATE_KEY, {
-              expiresIn: "1h",
-            });
-            //set jwt to cookie
-            res.cookie("jwt", token, { httpOnly: true, maxAge: 3600 });
+        let isPasswordCorrect = await bcrypt.compare(
+          loginUser.Password,
+          user.Password
+        );
 
-            res.status(200).json({
-              message: "login successfully",
-              userInfo: {
-                Username: user.Username,
-                PhoneNumber: user.PhoneNumber,
-              },
-            });
-          }
-          else{
-            throw new Error(`Some thing went wrong ${err.message}`);
-          }
+        if (!isPasswordCorrect)
+          throw new Error(`Password is incorrect`);
+
+        //password correct
+        const token = jwt.sign({ id: user._id }, process.env.PRIVATE_KEY, {
+          expiresIn: "1h",
         });
-      }else{
-        res.json({
-          message:"user name is not existing, please signup",
-        })
+        //set jwt to cookie
+        res.cookie("jwt", token, { httpOnly: true });
+
+        res.status(200).json({
+          message: "login successfully",
+          userInfo: {
+            Username: user.Username,
+            PhoneNumber: user.PhoneNumber,
+          },
+        });
       }
-    }catch (e) {
+    } catch (e) {
       res.json({
         error: e.message,
-      })
+      });
     }
   },
 };
 
-module.exports = userController
+module.exports = userController;

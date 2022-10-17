@@ -6,14 +6,19 @@ const cors = require('cors')
 require("dotenv").config();
 const database = require('./src/utils/databaseConn/connection')
 
+
 // CONFIG LIBRARY
 app.use(cors())
 require('dotenv').config()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
 
+
 //CONNECT TO DATABASE
 database.isConnected()
+
+
+
 
 //REQUIRE ROUTES
 const userRoute = require('./src/routes/user')
@@ -22,7 +27,7 @@ const menuRoute = require('./src/routes/menu')
 //ROUTES DEFINE
 app.use('/user', userRoute)
 app.use('/menu', menuRoute)
-app.use("/", authen, (req, res)=>{
+app.use("/", (req, res)=>{
     res.send('Welcome to world!');
 })
 
