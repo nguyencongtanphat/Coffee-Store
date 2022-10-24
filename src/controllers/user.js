@@ -1,18 +1,24 @@
 const User = require("../models/user");
+const Address = require("../models/address");
 const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
 const saltRounds = 10;
 const userController = {
   userSignupController: async (req, res) => {
     try {
+      console.log(1)
       //check is username available
       const user = await User.findOne({
         where: { Username: req.body.Username },
       });
+      console.log(2);
+
       if (user) {
+        console.log(3);
         //username is existing
         res.json("your username is used, please enter another name");
       } else {
+      console.log(4);
         //hash password
         const hash = await bcrypt.hash(req.body.Password, saltRounds);
 
@@ -22,15 +28,29 @@ const userController = {
           Password: hash,
           PhoneNumber: req.body.PhoneNumber,
         });
-        const response = await newUser.save();
+        const responseUser = await newUser.save();
+        // create a new Address
+        const newAddress = Address.build({
+          UserID: responseUser.id,
+          Value: req.body.Address,
+        });
+        const responseAddress = await newAddress.save();
+
         res.json({
           success: true,
           message: "you have successfully create account",
-          data: response,
+          data: {
+            "userInfo": responseUser,
+            "userAddress": responseAddress,
+          },
         });
       }
     } catch (e) {
-      res.status(404).json(e);
+      res.status(404).json(
+        {
+          "error":e
+        }
+      );
       //res.send("error", e);
     }
   },

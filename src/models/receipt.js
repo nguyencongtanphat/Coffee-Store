@@ -12,7 +12,7 @@ Receipt.init({
     },
     CustomerID: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: {
             model: 'User',
             key: 'id'
