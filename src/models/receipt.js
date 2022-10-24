@@ -10,16 +10,11 @@ Receipt.init({
         type: DataTypes.ENUM,
         values: ['Member', 'Non-Member']
     },
-    CustomerID: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: 'User',
-            key: 'id'
-        },
-        onDelete: 'CASCADE'
-    },
-    TotalAmount: DataTypes.INTEGER
+    TotalAmount: DataTypes.INTEGER,
+    // Status: {
+    //     type: DataTypes.ENUM,
+    //     values: ['InProgress', 'Completed']
+    // },
 }, {sequelize, modelName:'Receipt'})
 
 module.exports = Receipt
