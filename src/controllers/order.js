@@ -119,7 +119,7 @@ const orderController = {
 
         }catch(error){
             return res.status(404).json({
-                Message: error, 
+                Message: error.message ?? error, 
                 
             })
         }
@@ -158,7 +158,7 @@ const orderController = {
             
         }catch(error){
             return res.status(404).json({
-                Message: error, 
+                Message: error.message ?? error 
                 
             })
         }
@@ -191,7 +191,7 @@ const orderController = {
             })
         }catch(error){
             return res.status(404).json({
-                Message: error, 
+                Message: error.message ?? error
                 
             })
         }
