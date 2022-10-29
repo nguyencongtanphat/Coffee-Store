@@ -25,11 +25,8 @@ const database = {
                         crlfDelay: Infinity
                     })
                     for await (const line of rl){
-                        console.log(line)
                         if(line)
                             sequelize.query(line)
-                        else
-                            console.log(line)
                     }
                     
                 }
