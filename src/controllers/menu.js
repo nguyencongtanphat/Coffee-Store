@@ -1,17 +1,10 @@
 const categoryModel = require("../models/category");
 const itemModel = require("../models/item");
-const client = require("../utils/redis/redisConnect");
+
 
 const menuController = {
   getAllItems: async (req, res, next) => {
-    //check in cache
-    const cachedItems = await client.get("items");
-    if (cachedItems) {
-      return res.status(200).json({
-        message: "Get All Items cache",
-        data: JSON.parse(cachedItems),
-      });
-    }
+   
 
     const itemsDB = await itemModel.findAll({
       include: [
@@ -22,23 +15,11 @@ const menuController = {
         },
       ],
     });
-    //cache data to cache
-    client.SETEX("items", 30, JSON.stringify(itemsDB));
-    return res.status(200).json({
-      message: "Get All Items by DB",
-      data: itemsDB,
-    });
+   
   },
   getItemByID: async (req, res, next) => {
     const idReq = req.params.id;
-    //check in cache
-    const cachedItem = await client.get(`item-${idReq}`);
-    if (cachedItem) {
-      return res.status(200).json({
-        message: "Get Item from cache",
-        data: JSON.parse(cachedItem),
-      });
-    }
+   
     const itemDB = await itemModel.findByPk(idReq, {
       include: [
         {
@@ -52,12 +33,6 @@ const menuController = {
         message: "Get Error",
       });
     }
-    client.SETEX(`item-${idReq}`, 30, JSON.stringify(itemDB));
-    return res.status(200).json({
-      message: "Get Item from Database",
-      data: itemDB,
-    });
-    
   },
   getItemsByCategory: async (req, res, next) => {
     const categoryID = req.params.id;
