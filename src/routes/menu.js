@@ -2,13 +2,16 @@ const menuController = require('../controllers/menu')
 const express = require("express")
 const route = express.Router()
 
-// GET ALL ITEMS IN MENU
-route.get('/all-items', menuController.getAllItems)
+
 // GET A SPECIFIC ITEM BY ID
-route.get('/item/:id', menuController.getItemByID)
+route.get("/products/:id", menuController.getItemByID);
+// GET ALL ITEMS IN MENU
+route.get('/products',()=>{
+    console.log("all items")
+}, menuController.getAllItems)
 // GET ALL CATEGORIES
-route.get('/category', menuController.getAllCategory)
+route.get('/categories', menuController.getAllCategory)
 // GET ALL ITEMS BY CATEGORY
-route.get('/items-by-category/:id', menuController.getItemsByCategory)
+route.get("/categories/:id", menuController.getItemsByCategory);
 
 module.exports = route

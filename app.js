@@ -5,6 +5,8 @@ const app = express()
 const cors = require('cors')
 require("dotenv").config();
 const database = require('./src/utils/databaseConn/connection')
+const menuController = require("./src/controllers/menu");
+
 
 
 // CONFIG LIBRARY
@@ -27,9 +29,7 @@ const menuRoute = require('./src/routes/menu')
 //ROUTES DEFINE
 app.use('/user', userRoute)
 app.use('/menu', menuRoute)
-app.use("/", (req, res)=>{
-    res.send('Welcome to world!');
-})
+app.use("/", menuController.getBestSeller);
 
 app.listen(process.env.PORT , () => {
   console.log(`listening on http://localhost:${process.env.PORT}`);

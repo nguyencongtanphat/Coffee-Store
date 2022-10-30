@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
+const { response } = require("express");
 const saltRounds = 10;
 const userController = {
   userSignupController: async (req, res) => {
@@ -37,6 +38,7 @@ const userController = {
   userLoginController: async (req, res) => {
     try {
       const loginUser = req.body;
+      console.log(req.body)
       //check is username existing
       const user = await User.findOne({
         where: { Username: loginUser.Username },
@@ -50,7 +52,9 @@ const userController = {
         );
 
         if (!isPasswordCorrect)
-          throw new Error(`Password is incorrect`);
+          throw new Error(
+            `Password is incorrect, ${loginUser.Password}, ${user.Password}`
+          );
 
         //password correct
         const token = jwt.sign({ id: user._id }, process.env.PRIVATE_KEY, {
@@ -66,6 +70,8 @@ const userController = {
             PhoneNumber: user.PhoneNumber,
           },
         });
+      }else{
+        res.json("user not found",)
       }
     } catch (e) {
       res.json({

@@ -1,11 +1,25 @@
 const categoryModel = require("../models/category");
 const itemModel = require("../models/item");
 
-
 const menuController = {
-  getAllItems: async (req, res, next) => {
-   
+  getBestSeller: async (req, res, next) => {
+    const itemsDB = await itemModel.findAll({
+      limit: 8,
+      include: [
+        {
+          model: categoryModel,
+          attributes: ["Name"],
+          as: "Category",
+        },
+      ],
+    });
 
+     return res.status(200).json({
+       message: "Get best seller Items by DB",
+       data: itemsDB,
+     });
+  },
+  getAllItems: async (req, res, next) => {
     const itemsDB = await itemModel.findAll({
       include: [
         {
@@ -15,11 +29,13 @@ const menuController = {
         },
       ],
     });
-   
+    return res.status(200).json({
+      message: "Get All Items by DB",
+      data: itemsDB,
+    });
   },
   getItemByID: async (req, res, next) => {
     const idReq = req.params.id;
-   
     const itemDB = await itemModel.findByPk(idReq, {
       include: [
         {
@@ -33,6 +49,10 @@ const menuController = {
         message: "Get Error",
       });
     }
+    return res.status(200).json({
+      message: "Get Item from Database",
+      data: itemDB,
+    });
   },
   getItemsByCategory: async (req, res, next) => {
     const categoryID = req.params.id;
