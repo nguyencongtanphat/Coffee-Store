@@ -25,11 +25,15 @@ database.isConnected()
 //REQUIRE ROUTES
 const userRoute = require('./src/routes/user')
 const menuRoute = require('./src/routes/menu')
+const orderRoute = require('./src/routes/order')
 
 //ROUTES DEFINE
 app.use('/user', userRoute)
 app.use('/menu', menuRoute)
-app.use("/", menuController.getBestSeller);
+app.use('/order', orderRoute)
+app.use("/", (req, res)=>{
+    res.send('Welcome to world!');
+})
 
 app.listen(process.env.PORT , () => {
   console.log(`listening on http://localhost:${process.env.PORT}`);

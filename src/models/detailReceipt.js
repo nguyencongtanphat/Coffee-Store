@@ -5,25 +5,12 @@ const sequelize = require('../utils/databaseConn/sequelize')
 class DetailReceipt extends Model {}
 
 DetailReceipt.init({
-    ReceiptID: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'Receipt',
-            key: 'id'
-        },
-        onDelete: 'CASCADE'
+    Quantity: DataTypes.INTEGER,
+    Size: {
+        type: DataTypes.ENUM,
+        values: ['Small', 'Medium', 'Large']
     },
-    ItemID: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'Item',
-            key: 'id'
-        },
-        onDelete: 'CASCADE'
-    },
-    quantity: DataTypes.INTEGER
+    Price: DataTypes.INTEGER
 }, {sequelize, modelName:'DetailReceipt'})
 
 module.exports = DetailReceipt
