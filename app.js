@@ -26,11 +26,13 @@ database.isConnected()
 const userRoute = require('./src/routes/user')
 const menuRoute = require('./src/routes/menu')
 const orderRoute = require('./src/routes/order')
+const cartRoute = require('./src/routes/cart')
 
 //ROUTES DEFINE
 app.use('/user', userRoute)
 app.use('/menu', menuRoute)
 app.use('/order', orderRoute)
+app.use('/cart', cartRoute)
 app.use("/", (req, res)=>{
     res.send('Welcome to world!');
 })
