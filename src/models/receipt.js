@@ -8,7 +8,8 @@ Receipt.init({
     Address: DataTypes.STRING,
     CustomerType: {
         type: DataTypes.ENUM,
-        values: ['Member', 'Non-Member']
+        values: ['Member', 'Non-Member'],
+        defaultValue: 'Non-Member'
     },
     TotalAmount: DataTypes.INTEGER,
     // Status: {
