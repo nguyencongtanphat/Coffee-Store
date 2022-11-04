@@ -6,7 +6,9 @@ const cors = require('cors')
 require("dotenv").config();
 const database = require('./src/utils/databaseConn/connection')
 const menuController = require("./src/controllers/menu");
+var cookies = require("cookie-parser");
 
+app.use(cookies());
 
 
 // CONFIG LIBRARY
@@ -31,11 +33,9 @@ const cartRoute = require('./src/routes/cart')
 //ROUTES DEFINE
 app.use('/user', userRoute)
 app.use('/menu', menuRoute)
-app.use('/order', orderRoute)
-app.use('/cart', cartRoute)
-app.use("/", (req, res)=>{
-    res.send('Welcome to world!');
-})
+app.use('/order', authen, orderRoute)
+app.use("/cart", authen, cartRoute);
+app.use("/", menuController.getBestSeller)
 
 app.listen(process.env.PORT , () => {
   console.log(`listening on http://localhost:${process.env.PORT}`);

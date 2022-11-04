@@ -7,22 +7,16 @@ const saltRounds = 10;
 const userController = {
   userSignupController: async (req, res) => {
     try {
-      console.log(1)
       //check is username available
       const user = await User.findOne({
         where: { Username: req.body.Username },
       });
-      console.log(2);
-
       if (user) {
-        console.log(3);
         //username is existing
         res.json("your username is used, please enter another name");
       } else {
-      console.log(4);
         //hash password
         const hash = await bcrypt.hash(req.body.Password, saltRounds);
-
         //create new user and write to database
         const newUser = User.build({
           Username: req.body.Username,
@@ -41,24 +35,22 @@ const userController = {
           success: true,
           message: "you have successfully create account",
           data: {
-            "userInfo": responseUser,
-            "userAddress": responseAddress,
+            userInfo: responseUser,
+            userAddress: responseAddress,
           },
         });
       }
     } catch (e) {
-      res.status(404).json(
-        {
-          "error":e
-        }
-      );
+      res.status(404).json({
+        error: e,
+      });
       //res.send("error", e);
     }
   },
   userLoginController: async (req, res) => {
     try {
       const loginUser = req.body;
-      console.log(req.body)
+      console.log(req.body);
       //check is username existing
       const user = await User.findOne({
         where: { Username: loginUser.Username },
@@ -81,7 +73,7 @@ const userController = {
           expiresIn: "1h",
         });
         //set jwt to cookie
-        res.cookie("jwt", token, { httpOnly: true });
+        res.cookie("jwt", token, { httpOnly: true, secure: false });
 
         res.status(200).json({
           message: "login successfully",
@@ -90,8 +82,8 @@ const userController = {
             PhoneNumber: user.PhoneNumber,
           },
         });
-      }else{
-        res.json("user not found",)
+      } else {
+        res.json("user not found");
       }
     } catch (e) {
       res.json({
