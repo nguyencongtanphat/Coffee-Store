@@ -80,6 +80,7 @@ const userController = {
           userInfo: {
             Username: user.Username,
             PhoneNumber: user.PhoneNumber,
+            cookie: token,
           },
         });
       } else {
