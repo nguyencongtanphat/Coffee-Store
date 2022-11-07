@@ -33,8 +33,8 @@ const cartRoute = require('./src/routes/cart')
 //ROUTES DEFINE
 app.use('/user', userRoute)
 app.use('/menu', menuRoute)
-app.use('/order', authen, orderRoute)
-app.use("/cart", authen, cartRoute);
+app.use('/order', orderRoute)
+app.use("/cart", cartRoute);
 app.use("/", menuController.getBestSeller)
 
 app.listen(process.env.PORT , () => {
