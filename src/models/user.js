@@ -3,19 +3,26 @@ const sequelize = require('../utils/databaseConn/sequelize')
 
 class User extends Model {}
 
-User.init({
+User.init(
+  {
     Username: {
-        type: DataTypes.TEXT,
-        require: true
-    }, 
+      type: DataTypes.TEXT,
+      require: true,
+    },
+    Fullname: {
+      type: DataTypes.TEXT,
+      require: true,
+    },
     Password: {
-        type: DataTypes.TEXT,
-        require: true
+      type: DataTypes.TEXT,
+      require: true,
     },
     PhoneNumber: {
-        type: DataTypes.TEXT,
-        require: true
-    }
-}, {sequelize, modelName:'User'})
+      type: DataTypes.TEXT,
+      require: true,
+    },
+  },
+  { sequelize, modelName: "User" }
+);
 
 module.exports = User

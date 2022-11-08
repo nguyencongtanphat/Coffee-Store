@@ -7,6 +7,7 @@ const saltRounds = 10;
 const userController = {
   userSignupController: async (req, res) => {
     try {
+      console.log(req.body)
       //check is username available
       const user = await User.findOne({
         where: { Username: req.body.Username },
@@ -20,6 +21,7 @@ const userController = {
         //create new user and write to database
         const newUser = User.build({
           Username: req.body.Username,
+          Fullname: req.body.Fullname,
           Password: hash,
           PhoneNumber: req.body.PhoneNumber,
         });
@@ -44,13 +46,12 @@ const userController = {
       res.status(404).json({
         error: e,
       });
-      //res.send("error", e);
     }
   },
   userLoginController: async (req, res) => {
     try {
       const loginUser = req.body;
-      console.log(req.body);
+      console.log("userInfo1:", req.body);
       //check is username existing
       const user = await User.findOne({
         where: { Username: loginUser.Username },
@@ -62,7 +63,6 @@ const userController = {
           loginUser.Password,
           user.Password
         );
-
         if (!isPasswordCorrect)
           throw new Error(
             `Password is incorrect, ${loginUser.Password}, ${user.Password}`
@@ -78,16 +78,14 @@ const userController = {
         res.status(200).json({
           message: "login successfully",
           userInfo: {
-            Username: user.Username,
-            PhoneNumber: user.PhoneNumber,
-            cookie: token,
+           user
           },
         });
       } else {
-        res.json("user not found");
+        res.status(404).json("user not found");
       }
     } catch (e) {
-      res.json({
+      res.status(400).json({
         error: e.message,
       });
     }
