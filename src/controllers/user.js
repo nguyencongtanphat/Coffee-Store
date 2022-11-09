@@ -14,7 +14,7 @@ const userController = {
       });
       if (user) {
         //username is existing
-        res.json("your username is used, please enter another name");
+        res.status(401).json("your username is used, please enter another name");
       } else {
         //hash password
         const hash = await bcrypt.hash(req.body.Password, saltRounds);
@@ -56,7 +56,7 @@ const userController = {
       const user = await User.findOne({
         where: { Username: loginUser.Username },
       });
-
+      
       if (user) {
         //check password
         let isPasswordCorrect = await bcrypt.compare(
@@ -65,7 +65,7 @@ const userController = {
         );
         if (!isPasswordCorrect)
           throw new Error(
-            `Password is incorrect, ${loginUser.Password}, ${user.Password}`
+            `Password is incorrect`
           );
 
         //password correct
@@ -82,9 +82,13 @@ const userController = {
           },
         });
       } else {
-        res.status(404).json("user not found");
+        console.log("user not found");
+        res.status(401).json({
+          message: "User not found",
+        });
       }
     } catch (e) {
+      console.log("error+", e.message)
       res.status(400).json({
         error: e.message,
       });
