@@ -7,14 +7,16 @@ const saltRounds = 10;
 const userController = {
   userSignupController: async (req, res) => {
     try {
-      console.log(req.body)
+      console.log(req.body);
       //check is username available
       const user = await User.findOne({
         where: { Username: req.body.Username },
       });
       if (user) {
         //username is existing
-        res.status(401).json("your username is used, please enter another name");
+        res
+          .status(401)
+          .json("your username is used, please enter another name");
       } else {
         //hash password
         const hash = await bcrypt.hash(req.body.Password, saltRounds);
@@ -56,17 +58,14 @@ const userController = {
       const user = await User.findOne({
         where: { Username: loginUser.Username },
       });
-      
+
       if (user) {
         //check password
         let isPasswordCorrect = await bcrypt.compare(
           loginUser.Password,
           user.Password
         );
-        if (!isPasswordCorrect)
-          throw new Error(
-            `Password is incorrect`
-          );
+        if (!isPasswordCorrect) throw new Error(`Password is incorrect`);
 
         //password correct
         const token = jwt.sign({ id: user._id }, process.env.PRIVATE_KEY, {
@@ -78,7 +77,7 @@ const userController = {
         res.status(200).json({
           message: "login successfully",
           userInfo: {
-           user
+            user,
           },
         });
       } else {
@@ -88,11 +87,25 @@ const userController = {
         });
       }
     } catch (e) {
-      console.log("error+", e.message)
+      console.log("error+", e.message);
       res.status(400).json({
         error: e.message,
       });
     }
+  },
+  getAllUserController: async (req, res, next) => {
+    try{
+       const users = await User.findAll({});
+       return res.status(200).json({
+         message: "Get All user by DB",
+         data: users,
+       });
+    }catch(e){
+      res.status(400).json({
+        error: e.message,
+      })
+    }
+   
   },
 };
 
