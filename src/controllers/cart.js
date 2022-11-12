@@ -1,5 +1,8 @@
 const cartModel = require('../models/cart')
 const customerModel = require('../models/user')
+const itemModel = require('../models/item')
+const categoryModel = require('../models/category')
+
 const cartController = {
     create: async (req, res, next) => {
         try{
@@ -43,7 +46,13 @@ const cartController = {
         try{
             const customerID = req.params.id
             const cartDB = await cartModel.findAll({
-                where: {CustomerID: customerID}
+                where: {CustomerID: customerID},
+                include: [{
+                    model: itemModel, attributes: ['Name'],
+                    include: [{
+                        model: categoryModel, attributes: ['Name']
+                    }]
+                }]
             })
 
             return res.status(200).json({

@@ -7,7 +7,6 @@ const saltRounds = 10;
 const userController = {
   userSignupController: async (req, res) => {
     try {
-      
       //check is username available
       const user = await User.findOne({
         where: { Username: req.body.Username },
@@ -74,15 +73,23 @@ const userController = {
           expiresIn: "1h",
         });
 
+        const address = await Address.findAll({
+          where: {
+            UserID:user.id,
+          },
+        });
+
+        console.log("Address: ", address)
+
         res.status(200).json({
           message: "login successfully",
           accessToken: token,
           userInfo: {
             user,
+            address
           },
         });
       } else {
-        
         res.status(401).json({
           message: "User not found",
         });
@@ -96,7 +103,7 @@ const userController = {
   },
   userGetLoginController: async (req, res) => {
     try {
-      console.log("login get")
+      console.log("login get");
       if (!req.header("Authorization"))
         throw new Error(
           "This session is ended. Please login again to continue"
@@ -109,9 +116,20 @@ const userController = {
       });
       console.log("user from get login:", user);
       if (user)
+      {
+        const address = await Address.findAll({
+          where: {
+            UserID: user.id,
+          },
+        });
+
+
         return res.status(200).json({
           user: user,
+          address:address,
         });
+      }
+        
       throw new Error("This session is ended. Please login again to continue");
     } catch (err) {
       console.log("catch err here", err.message);
