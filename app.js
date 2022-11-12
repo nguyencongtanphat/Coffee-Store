@@ -12,7 +12,12 @@ app.use(cookies());
 
 
 // CONFIG LIBRARY
-app.use(cors())
+app.use(
+  cors({
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 require('dotenv').config()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
@@ -33,8 +38,8 @@ const cartRoute = require('./src/routes/cart')
 //ROUTES DEFINE
 app.use('/user', userRoute)
 app.use('/menu', menuRoute)
-app.use('/order', orderRoute)
-app.use("/cart", cartRoute);
+app.use('/order',authen, orderRoute)
+app.use("/cart",authen, cartRoute);
 app.use("/", menuController.getBestSeller)
 
 app.listen(process.env.PORT , () => {
