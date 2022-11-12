@@ -5,7 +5,8 @@ const route = express.Router()
 
 
 route.post("/signup", userController.userSignupController);
-route.post("/login", userController.userLoginController);
+route.post("/login", userController.userPostLoginController);
+route.get("/login", userController.userGetLoginController);
 route.get("/", userController.getAllUserController);
 
 module.exports = route
