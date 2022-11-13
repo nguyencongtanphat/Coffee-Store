@@ -66,7 +66,7 @@ const cartController = {
             const cartDB = await cartModel.findAll({
                 where: {CustomerID: customerID},
                 include: [{
-                    model: itemModel, attributes: ['Name'],
+                    model: itemModel, attributes: ['Name', 'Image'],
                     include: [{
                         model: categoryModel, attributes: ['Name']
                     }]

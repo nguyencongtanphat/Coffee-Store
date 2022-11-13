@@ -7,7 +7,8 @@ Item.init({
     Name: DataTypes.STRING,
     SPrice: DataTypes.INTEGER,
     MPrice: DataTypes.INTEGER,
-    LPrice: DataTypes.INTEGER
+    LPrice: DataTypes.INTEGER,
+    Image: DataTypes.TEXT
 }, {sequelize, modelName:'Item'})
 
 module.exports = Item
