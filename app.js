@@ -14,7 +14,7 @@ app.use(cookies());
 // CONFIG LIBRARY
 app.use(
   cors({
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST","DELETE"],
     credentials: true,
   })
 );

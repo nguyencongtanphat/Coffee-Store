@@ -110,6 +110,7 @@ const cartController = {
 
     deleteCarts: async(req, res, next) => {
         try{
+            
             const idsReq = req.body.IDs
             if(!idsReq) 
                 throw "Provide ID"
