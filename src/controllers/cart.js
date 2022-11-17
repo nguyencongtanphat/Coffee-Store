@@ -2,6 +2,7 @@ const cartModel = require('../models/cart')
 const customerModel = require('../models/user')
 const itemModel = require('../models/item')
 const categoryModel = require('../models/category')
+const { Op } = require('sequelize')
 
 const cartController = {
     create: async (req, res, next) => {
@@ -105,7 +106,38 @@ const cartController = {
                 message: error.message ?? error
             })
         }
-    }
+    },
+
+    deleteCarts: async(req, res, next) => {
+        try{
+            const idsReq = req.body.IDs
+            if(!idsReq) 
+                throw "Provide ID"
+
+            const cartsDB = await cartModel.findAll({
+                where: {
+                    id: {[Op.in]: idsReq }
+                }
+            })
+            if(!cartsDB){
+                throw "Cart does not exist!"
+            }
+
+            Promise.all(
+                cartsDB.map(async cart => {
+                    await cart.destroy()
+                })
+            )
+
+            return res.status(200).json({
+                message: "deleted"
+            })
+        }catch(error){
+            return res.status(404).json({
+                message: error.message ?? error
+            })
+        }
+    },
 }
 
 module.exports = cartController
