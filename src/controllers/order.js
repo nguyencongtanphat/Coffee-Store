@@ -104,7 +104,7 @@ const orderController = {
                             ReceiptID: receiptID
                         },
                         include:[{
-                            model: itemModel, attributes: ['Name']
+                            model: itemModel, attributes: ['Name', 'Image']
                         }]
                     })
                     orderRes.DetailOrder = detailDB
@@ -138,7 +138,7 @@ const orderController = {
                             ReceiptID: receiptID
                         },
                         include:[{
-                            model: itemModel, attributes: ['Name']
+                            model: itemModel, attributes: ['Name', 'Image']
                         }]
                     })
                     orderRes.DetailOrder = detailDB
@@ -176,7 +176,7 @@ const orderController = {
                     ReceiptID: orderID
                 },
                 include:[{
-                    model: itemModel, attributes: ['Name']
+                    model: itemModel, attributes: ['Name', 'Image']
                 }]
             })
 
