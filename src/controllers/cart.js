@@ -6,6 +6,7 @@ const { Op } = require('sequelize')
 
 const cartController = {
     create: async (req, res, next) => {
+        console.log("prodct:", req.body)
         try{
             const cartReq = {
                 itemID: req.body.ItemID,
@@ -25,7 +26,13 @@ const cartController = {
                     CustomerID: cartReq.customerID,
                     ItemID: cartReq.itemID,
                     Size: cartReq.size
-                }
+                },
+                 include: [{
+                    model: itemModel, attributes: ['Name', 'Image'],
+                    include: [{
+                        model: categoryModel, attributes: ['Name']
+                    }]
+                }]
             })
             let updatedCart
             if(cartItemDB){
