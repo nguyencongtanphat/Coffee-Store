@@ -15,7 +15,7 @@ const userController = {
         //username is existing
         res
           .status(401)
-          .json("your username is used, please enter another name");
+          .json("tên người dùng(username) đã tồn tại");
       } else {
         //hash password
         const hash = await bcrypt.hash(req.body.Password, saltRounds);
@@ -36,7 +36,7 @@ const userController = {
 
         res.json({
           success: true,
-          message: "you have successfully create account",
+          message: "bạn đã thêm đăng nhập thành công",
           data: {
             userInfo: responseUser,
             userAddress: responseAddress,
@@ -66,7 +66,7 @@ const userController = {
           loginUser.Password,
           user.Password
         );
-        if (!isPasswordCorrect) throw new Error(`Password is incorrect`);
+        if (!isPasswordCorrect) throw new Error(`Mật khẩu không chính xác`);
 
         //password correct
         const token = jwt.sign({ id: user.id }, process.env.PRIVATE_KEY, {
@@ -82,7 +82,7 @@ const userController = {
         console.log("Address: ", address)
 
         res.status(200).json({
-          message: "login successfully",
+          message: "Đăng nhập thành công",
           accessToken: token,
           userInfo: {
             user,
@@ -91,11 +91,10 @@ const userController = {
         });
       } else {
         res.status(401).json({
-          message: "User not found",
+          message: "Người dùng không tồn tại",
         });
       }
     } catch (e) {
-      console.log("error+", e.message);
       res.status(400).json({
         error: e.message,
       });
@@ -106,7 +105,7 @@ const userController = {
       console.log("login get");
       if (!req.header("Authorization"))
         throw new Error(
-          "This session is ended. Please login again to continue"
+          "phiên làm việc đã kết thúc bạn cần đăng nhập lại để tiếp tục"
         );
       const token = req.header("Authorization").replace("Bearer ", "");
       console.log("token: ", token);
@@ -130,7 +129,9 @@ const userController = {
         });
       }
         
-      throw new Error("This session is ended. Please login again to continue");
+      throw new Error(
+        "phiên làm việc đã kết thúc bạn cần đăng nhập lại để tiếp tục"
+      );
     } catch (err) {
       console.log("catch err here", err.message);
       return res.status(403).json({
