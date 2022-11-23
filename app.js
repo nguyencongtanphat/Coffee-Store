@@ -34,10 +34,12 @@ const userRoute = require('./src/routes/user')
 const menuRoute = require('./src/routes/menu')
 const orderRoute = require('./src/routes/order')
 const cartRoute = require('./src/routes/cart')
+const blogRoute = require('./src/routes/blog')
 
 //ROUTES DEFINE
 app.use('/user', userRoute)
 app.use('/menu', menuRoute)
+app.use('/blog', blogRoute)
 app.use('/order',authen, orderRoute)
 app.use("/cart",authen, cartRoute);
 app.use("/", menuController.getBestSeller)
