@@ -13,9 +13,7 @@ const userController = {
       });
       if (user) {
         //username is existing
-        res
-          .status(401)
-          .json("tên người dùng(username) đã tồn tại");
+        res.status(401).json("tên người dùng(username) đã tồn tại");
       } else {
         //hash password
         const hash = await bcrypt.hash(req.body.Password, saltRounds);
@@ -75,18 +73,18 @@ const userController = {
 
         const address = await Address.findAll({
           where: {
-            UserID:user.id,
+            UserID: user.id,
           },
         });
 
-        console.log("Address: ", address)
+        console.log("Address: ", address);
 
         res.status(200).json({
           message: "Đăng nhập thành công",
           accessToken: token,
           userInfo: {
             user,
-            address
+            address,
           },
         });
       } else {
@@ -114,21 +112,19 @@ const userController = {
         where: { id: decodedUserId.id },
       });
       console.log("user from get login:", user);
-      if (user)
-      {
+      if (user) {
         const address = await Address.findAll({
           where: {
             UserID: user.id,
           },
         });
 
-
         return res.status(200).json({
           user: user,
-          address:address,
+          address: address,
         });
       }
-        
+
       throw new Error(
         "phiên làm việc đã kết thúc bạn cần đăng nhập lại để tiếp tục"
       );
@@ -151,6 +147,39 @@ const userController = {
       res.status(400).json({
         error: e.message,
       });
+    }
+  },
+  userUpdateController: async function (req, res, next) {
+    try {
+      const userInfo = req.body;
+      //find user by id
+      const user = await User.findOne({
+        where: { id: userInfo.id },
+      });
+
+      if (user) {
+        //find address
+        const address = await Address.findOne({
+          where: {
+            UserID: user.id,
+          },
+        });
+        console.log("addreess", address);
+
+        address.set({
+          Value: userInfo.Address,
+        });
+        user.set(userInfo);
+        const responseUser = await user.save();
+        const responseAddress = await address.save();
+        res.json({
+          userInfo: responseUser,
+          address: [responseAddress]
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ error: e });
     }
   },
 };
