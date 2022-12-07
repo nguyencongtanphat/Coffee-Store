@@ -166,10 +166,20 @@ const userController = {
         });
         console.log("addreess", address);
 
+        //update address
         address.set({
           Value: userInfo.Address,
         });
+        //update user info
+        if(userInfo.Password){
+          //hash password
+          const hash = await bcrypt.hash(userInfo.Password, saltRounds);
+          userInfo.Password = hash;
+        }else{
+          delete userInfo.Password;
+        }
         user.set(userInfo);
+
         const responseUser = await user.save();
         const responseAddress = await address.save();
         res.json({
