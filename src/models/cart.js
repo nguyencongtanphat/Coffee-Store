@@ -15,6 +15,6 @@ Cash.init({
         type: DataTypes.ENUM('Done', 'InCart'),
         defaultValue: 'InCart'
     }
-}, {sequelize, modelName:'CASH'})
+}, {sequelize, modelName:'Cart'})
 
 module.exports = Cash
