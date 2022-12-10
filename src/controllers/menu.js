@@ -30,7 +30,7 @@ const menuController = {
       ],
     });
     return res.status(200).json({
-      message: "Get All Items by DB",
+      message: "Get All Items by DB1",
       data: itemsDB,
     });
   },

@@ -5,6 +5,7 @@ class Item extends Model {}
 
 Item.init({
     Name: DataTypes.STRING,
+    Description: DataTypes.STRING,
     SPrice: DataTypes.INTEGER,
     MPrice: DataTypes.INTEGER,
     LPrice: DataTypes.INTEGER,
