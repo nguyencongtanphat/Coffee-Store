@@ -40,7 +40,7 @@ const blogRoute = require('./src/routes/blog')
 app.use('/user', userRoute)
 app.use('/menu', menuRoute)
 app.use('/blog', blogRoute)
-app.use('/order',authen, orderRoute)
+app.use('/order', orderRoute)
 app.use("/cart",authen, cartRoute);
 app.use("/", menuController.getBestSeller)
 
